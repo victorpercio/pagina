@@ -47,6 +47,7 @@ function startGame() {
       const marioPosition = mario.getBoundingClientRect();
       gameOverScreen.style.top = `${marioPosition.top + marioPosition.height / 2}px`; // Posição Y ajustada para o centro do Mario
       gameOverScreen.style.left = `${marioPosition.left + marioPosition.width / 4}px`; // Posição X ajustada para o centro do Mario
+      imagem scr = './img/game-over.png';
 
       // Ajustar o tamanho da imagem de Game Over para um valor menor
       gameOverScreen.style.width = `${marioPosition.width * 0.8}px`; // 80% do tamanho do Mario
