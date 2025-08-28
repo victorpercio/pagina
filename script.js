@@ -1,105 +1,92 @@
-const mario = document.getElementById("mario");
-const pipe = document.getElementById("pipe");
-const gameBoard = document.getElementById("gameBoard");
-const scoreDisplay = document.getElementById("score");
-const levelDisplay = document.getElementById("level");
-const gameOverScreen = document.getElementById("gameOver");
+const mario = document.querySelector('.mario');
+const pipe = document.querySelector('.pipe');
+const cloud = document.querySelector('.cloud');
 
-// Áudios
-const jumpSound = new Audio("jump.mp3");
-const gameOverSound = new Audio("8d82b5_SMW_Game_Over_Sound_Effect.mp3");
+const gameOver = document.querySelector('.game-over');
+const restartButton = document.querySelector('.restart');
 
-// Variáveis de controle
-let score = 0;
-let level = 1;
-let isGameOver = false;
-let gameLoop;
+const jump = () => {
 
-// Função de pulo
-function jump() {
-  if (!mario.classList.contains("jump") && !isGameOver) {
-    mario.classList.add("jump");
-    jumpSound.play();
-    setTimeout(() => mario.classList.remove("jump"), 500);
-  }
+    mario.classList.add('jump');
+
+    setTimeout(() => {
+
+        mario.classList.remove('jump');
+
+    }, 500);
 }
 
-// Loop principal
-function startGame() {
-  gameLoop = setInterval(() => {
+const loop = setInterval(() => {
+
     const pipePosition = pipe.offsetLeft;
-    const marioBottom = +window
-      .getComputedStyle(mario)
-      .bottom.replace("px", "");
+    const marioPosition = +window.getComputedStyle(mario).bottom.replace('px', '');
+    const cloudPosition = +window.getComputedStyle(cloud).left.replace('px', '');
 
-    // Colisão
-    if (pipePosition > 0 && pipePosition < 80 && marioBottom < 80) {
-      isGameOver = true;
-      pipe.style.animation = "none";
-      pipe.style.left = `${pipePosition}px`;
+    if (pipePosition <= 100 && pipePosition > 0 && marioPosition < 60) {
 
-      mario.style.animation = "none";
-      mario.style.bottom = `${marioBottom}px`;
+        pipe.style.animation = 'none';
+        pipe.style.left = `${pipePosition}px`;
 
-      gameOverSound.play();
+        mario.style.animation = 'none';
+        mario.style.bottom = `${marioPosition}px`;
 
-      // Posição de Game Over: colocar onde o Mario colidiu com o pipe
-      const marioPosition = mario.getBoundingClientRect();
-      gameOverScreen.style.top = `${marioPosition.top + marioPosition.height / 2}px`; // Posição Y ajustada para o centro do Mario
-      gameOverScreen.style.left = `${marioPosition.left + marioPosition.width / 4}px`; // Posição X ajustada para o centro do Mario
-      imagem scr = './img/game-over.png';
+        mario.src = 'assets/imgs/game-over.png';
+        mario.style.width = '70px';
+        mario.style.marginLeft = '35px';
 
-      // Ajustar o tamanho da imagem de Game Over para um valor menor
-      gameOverScreen.style.width = `${marioPosition.width * 0.8}px`; // 80% do tamanho do Mario
-      gameOverScreen.style.height = `${marioPosition.height * 0.8}px`; // 80% da altura do Mario
+        cloud.style.animation = 'cloud 20s infinite linear';
+        cloud.style.left = `${cloudPosition}px`;
 
-      gameOverScreen.classList.remove("hidden");
+        gameOver.style.visibility = 'visible';
 
-      clearInterval(gameLoop);
-    } else if (!isGameOver) {
-      // Pontuação
-      score++;
-      scoreDisplay.textContent = "Score: " + score;
-
-      // Mudança de fase a cada 200 pontos
-      if (score % 200 === 0) {
-        level++;
-        levelDisplay.textContent = "Fase: " + level;
-        changeWeather(level);
-      }
+        clearInterval(loop);
     }
-  }, 20);
+}, 10);
+
+const restart = () => {
+
+    gameOver.style.visibility = 'hidden';
+
+    pipe.style.animation = 'pipe-animations 1.5s infinite linear';
+    pipe.style.left = ``;
+
+    mario.src = 'assets/imgs/mario.gif';
+    mario.style.width = '130px';
+    mario.style.bottom = '0px';
+    mario.style.marginLeft = '';
+    mario.style.animation = '';
+
+    cloud.style.left = ``;
+
+    const loop = setInterval(() => {
+
+        const pipePosition = pipe.offsetLeft;
+        const marioPosition = +window.getComputedStyle(mario).bottom.replace('px', '');
+        const cloudPosition = +window.getComputedStyle(cloud).left.replace('px', '');
+    
+        if (pipePosition <= 100 && pipePosition > 0 && marioPosition < 60) {
+    
+            pipe.style.animation = 'none';
+            pipe.style.left = `${pipePosition}px`;
+    
+            mario.style.animation = 'none';
+            mario.style.bottom = `${marioPosition}px`;
+    
+            mario.src = 'assets/imgs/game-over.png';
+            mario.style.width = '70px';
+            mario.style.marginLeft = '35px';
+    
+            cloud.style.animation = 'cloud 20s infinite linear';
+            cloud.style.left = `${cloudPosition}px`;
+    
+            gameOver.style.visibility = 'visible';
+    
+            clearInterval(loop);
+        }
+    }, 10);
 }
 
-// Mudança de clima
-function changeWeather(lv) {
-  gameBoard.className = "game-board";
-  if (lv % 4 === 1) gameBoard.classList.add("day");
-  if (lv % 4 === 2) gameBoard.classList.add("afternoon");
-  if (lv % 4 === 3) gameBoard.classList.add("night");
-  if (lv % 4 === 0) {
-    gameBoard.classList.add("rain");
-    startRain();
-  }
-}
+document.addEventListener('keydown', jump);
+document.addEventListener('touchstart', jump);
 
-// Criar chuva
-function startRain() {
-  for (let i = 0; i < 20; i++) {
-    const drop = document.createElement("div");
-    drop.classList.add("rain-drop");
-    drop.style.left = Math.random() * window.innerWidth + "px";
-    drop.style.animationDuration = 0.5 + Math.random() * 0.5 + "s";
-    gameBoard.appendChild(drop);
-
-    setTimeout(() => drop.remove(), 1000);
-  }
-  if (!isGameOver) setTimeout(startRain, 500);
-}
-
-// Eventos
-document.addEventListener("keydown", jump);
-document.addEventListener("click", jump);
-
-// Iniciar jogo
-startGame();
+restartButton.addEventListener('click', restart);
