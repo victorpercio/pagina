@@ -23,7 +23,7 @@ const loop = setInterval(() => {
         mario.style.animation = 'none';
         mario.style.bottom = `${marioPosition}px`;
 
-        mario.src = 'assets/imgs/game-over.png';
+        mario.src = './imgs/game-over.png';
         mario.style.width = '70px';
         mario.style.marginLeft = '35px';
 
@@ -41,7 +41,7 @@ document.addEventListener('touchstart', jump);
 restartButton.addEventListener('click', () => {
     gameOver.style.visibility = 'hidden';
     pipe.style.animation = 'pipe-animation 1.5s infinite linear';
-    mario.src = 'assets/imgs/mario.gif';
+    mario.src = './imgs/mario.gif';
     mario.style.width = '130px';
     mario.style.bottom = '0px';
     cloud.style.left = '';
