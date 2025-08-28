@@ -1,96 +1,88 @@
 const mario = document.querySelector('.mario');
 const pipe = document.querySelector('.pipe');
 const clouds = document.querySelector('.clouds');
-const gameBoard = document.getElementById('gameBoard');
-
+const scoreBoard = document.querySelector('.score-board');
+const scoreSpan = document.getElementById('pontos');
+const faseSpan = document.getElementById('fase');
 const jumpSound = document.getElementById('jump-sound');
-const gameOverSound = document.getElementById('gameover-sound');
-
-const pontosDisplay = document.getElementById('pontos');
-const faseDisplay = document.getElementById('fase');
+const gameoverSound = document.getElementById('gameover-sound');
+const restartBtn = document.getElementById('restart-btn');
 
 let pontos = 0;
 let fase = 1;
+let isGameOver = false;
+let gameInterval;
 
-// Velocidade por fase
-const faseVelocidade = [
-  {pipe: 3.0, clouds: 30},
-  {pipe: 2.8, clouds: 28},
-  {pipe: 2.6, clouds: 26},
-  {pipe: 2.4, clouds: 24},
-  {pipe: 2.2, clouds: 22},
-  {pipe: 2.0, clouds: 20},
-  {pipe: 1.8, clouds: 18},
-  {pipe: 1.6, clouds: 16},
-  {pipe: 1.4, clouds: 14},
-  {pipe: 1.2, clouds: 12},
-  {pipe: 1.0, clouds: 10},
-];
-
-function atualizarVelocidade() {
-  const index = Math.min(fase - 1, faseVelocidade.length - 1);
-  const pipeSpeed = faseVelocidade[index].pipe;
-  const cloudsSpeed = faseVelocidade[index].clouds;
-
-  pipe.style.animation = `pipe-animation ${pipeSpeed}s linear infinite`;
-  clouds.style.animation = `clouds-animation ${cloudsSpeed}s linear infinite`;
-}
-
-// Início lento
-atualizarVelocidade();
-
-// Pulo
 function jump() {
-  if (!mario.classList.contains('jump')) {
-    mario.classList.add('jump');
-    jumpSound.currentTime = 0;
-    jumpSound.play();
-    setTimeout(() => mario.classList.remove('jump'), 500);
+  if (isGameOver) return;
+  mario.classList.add('jump');
+  jumpSound.currentTime = 0;
+  jumpSound.play();
+  setTimeout(() => {
+    mario.classList.remove('jump');
+  }, 500);
+}
+
+function updateScore() {
+  pontos += 1;
+  scoreSpan.textContent = pontos;
+  if (pontos % 10 === 0) {
+    fase += 1;
+    faseSpan.textContent = fase;
   }
 }
 
-// Pontuação
-const pontosInterval = setInterval(() => {
-  pontos += 1;
-  pontosDisplay.textContent = pontos;
+function gameOver() {
+  isGameOver = true;
+  mario.src = './img/gameover.png';
+  gameoverSound.play();
+  clearInterval(gameInterval);
+  restartBtn.style.display = 'block';
+  restartBtn.focus();
+}
 
-  // Avança fase a cada 1000 pontos
-  if (pontos % 1000 === 0) {
-    fase++;
-    faseDisplay.textContent = fase;
+function resetGame() {
+  pontos = 0;
+  fase = 1;
+  isGameOver = false;
+  scoreSpan.textContent = pontos;
+  faseSpan.textContent = fase;
+  mario.src = './img/mario.gif';
+  restartBtn.style.display = 'none';
+  // Reset pipe and other elements as desired
+  startGame();
+}
 
-    // alterna clima
-    if (fase % 3 === 1) {
-      gameBoard.className = "game-board day";
-    } else if (fase % 3 === 2) {
-      gameBoard.className = "game-board night";
-    } else {
-      gameBoard.className = "game-board rain";
+function startGame() {
+  // Example of increasing difficulty: speed up pipe over time
+  let pipeSpeed = 2000 - (fase * 100);
+  if (pipeSpeed < 800) pipeSpeed = 800;
+  
+  pipe.style.left = '100vw';
+  gameInterval = setInterval(() => {
+    if (!isGameOver) {
+      updateScore();
+      // Move pipe logic etc. (placeholder, replace as per your game logic)
+      // Detect collision etc.
     }
+  }, 1000);
+}
 
-    atualizarVelocidade();
+// Event listeners
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space' || e.key === ' ' || e.key === 'ArrowUp') {
+    jump();
   }
-}, 50);
+});
 
-// Loop de colisão
-const loop = setInterval(() => {
-  const pipePosition = pipe.offsetLeft;
-  const marioPosition = +window.getComputedStyle(mario).bottom.replace('px','');
-
-  if (pipePosition <= 120 && pipePosition > 0 && marioPosition < 80) {
-    pipe.style.animation = 'none';
-    mario.style.animation = 'none';
-    mario.style.bottom = `${marioPosition}px`;
-
-    mario.src = './img/game-over.png';
-    mario.style.width = '75px';
-    mario.style.marginLeft = '50px';
-
-    clearInterval(loop);
-    clearInterval(pontosInterval);
-
-    gameOverSound.play();
+restartBtn.addEventListener('click', resetGame);
+restartBtn.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    resetGame();
   }
-}, 10);
+});
 
-document.addEventListener('keydown', jump);
+// Start the game on page load
+window.onload = () => {
+  startGame();
+};
