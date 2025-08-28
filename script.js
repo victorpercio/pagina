@@ -42,6 +42,11 @@ function startGame() {
       mario.style.bottom = `${marioBottom}px`;
 
       gameOverSound.play();
+
+      // Definir a posição de "Game Over" onde o Mario bateu no pipe
+      const marioPosition = mario.getBoundingClientRect();
+      gameOverScreen.style.top = `${marioPosition.top}px`;
+      gameOverScreen.style.left = `${marioPosition.left}px`;
       gameOverScreen.classList.remove("hidden");
 
       clearInterval(gameLoop);
