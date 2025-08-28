@@ -1,145 +1,85 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
 }
 
-img {
-  user-select: none;
-  -webkit-user-drag: none;
-  image-rendering: pixelated;
+img { 
+  user-select: none; 
+  -webkit-user-drag: none; 
+  image-rendering: pixelated; 
 }
 
 /* Área do jogo */
-.game-board {
-  width: 100%;
-  height: 500px;
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
-  border-bottom: 15px solid rgb(8, 149, 24);
-  background: linear-gradient(#156c8f, #adccd8);
-  transition: background 1.2s ease;
+.game-board { 
+  width: 100%; 
+  height: 500px; 
+  margin: 0 auto; 
+  position: relative; 
+  overflow: hidden; 
+  border-bottom: 15px solid rgb(8, 149, 24); 
+  background: linear-gradient(#156c8f, #adccd8); 
+  transition: background 1.2s ease; 
 }
 
 /* Climas */
-.game-board.day { background: linear-gradient(#4fc3f7, #adccd8); }
+.game-board.day { background: linear-gradient(#4fc3f7, #adccd8); } 
 .game-board.afternoon { background: linear-gradient(#ff9800, #ffcc80); }
 .game-board.night { background: linear-gradient(#0d47a1, #263238); }
 .game-board.rain { background: linear-gradient(#607d8b, #90a4ae); }
 
 /* HUD */
-.score-board {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  font: 700 32px/1 Arial, sans-serif;
-  color: #fff;
-  text-shadow: 1px 1px 2px #000;
-  pointer-events: none;
-}
-
-#level.score-board {
-  top: 50px;
-}
+.score-board { 
+  position: absolute; 
+  top: 10px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  font: 700 32px/1 Arial, sans-serif; 
+  color: #fff; 
+  text-shadow: 1px 1px 2px #000; 
+  pointer-events: none; 
+} 
+#level.score-board { top: 50px; }
 
 /* Mario */
-.mario {
-  position: absolute;
-  bottom: 0;
-  width: 150px;
+.mario { 
+  position: absolute; 
+  bottom: 0; 
+  width: 150px; 
 }
-
-.jump {
-  animation: jump 500ms ease-out;
-}
+.jump { animation: jump 500ms ease-out; }
 
 /* Cano */
-.pipe {
-  position: absolute;
-  bottom: 0;
-  width: 80px;
-  animation: pipe-animation 1.5s linear infinite;
-  text-align: center;
+.pipe { 
+  position: absolute; 
+  bottom: 0; 
+  width: 80px; 
+  animation: pipe-animation 1.5s linear infinite; 
+  text-align: center; 
 }
-
-.pipe-text {
-  position: absolute;
-  top: 5px;
-  left: 50%;
-  transform: translateX(-50%);
-  font: 700 16px Arial, sans-serif;
-  color: #fff;
-  text-shadow: 1px 1px 2px #000;
+.pipe-text { 
+  position: absolute; 
+  top: 5px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  font: 700 16px Arial, sans-serif; 
+  color: #fff; 
+  text-shadow: 1px 1px 2px #000; 
 }
-
-.pipe img {
-  width: 100%;
-  display: block;
-}
+.pipe img { width: 100%; display: block; }
 
 /* Nuvens */
-.clouds {
-  position: absolute;
-  top: 50px;
-  width: 550px;
-  animation: clouds-animation 20s linear infinite;
+.clouds { 
+  position: absolute; 
+  top: 50px; 
+  width: 550px; 
+  animation: clouds-animation 20s linear infinite; 
 }
-
 .cloud-light { filter: brightness(120%); }
 .cloud-dark { filter: brightness(70%); }
 
 /* Gotas de chuva */
-.rain-drop {
-  position: absolute;
-  top: -12px;
-  width: 2px;
-  height: 15px;
-  background: #ffffff;
-  opacity: 0.6;
-  animation: rain-fall 0.7s linear infinite;
-  pointer-events: none;
-}
-
-/* Game Over */
-.game-over {
-  position: absolute;
-  top: 50%;
-  left: 10%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-}
-
-.hidden {
-  display: none;
-}
-
-/* Animações */
-@keyframes pipe-animation {
-  from { right: -80%; }
-  to { right: 100%; }
-}
-
-@keyframes jump {
-  0% { bottom: 0; }
-  40%, 60% { bottom: 180px; }
-  100% { bottom: 0; }
-}
-
-@keyframes clouds-animation {
-  0% { left: 100%; }
-  100% { left: -550px; }
-}
-
-@keyframes rain-fall {
-  to { transform: translateY(520px); }
-}
-
-/* Responsivo */
-@media (max-width: 600px) {
-  .game-board { height: 420px; }
-  .mario { width: 120px; }
-  .pipe { width: 70px; }
-  .score-board { font-size: 26px; }
-}
+.rain-drop { 
+  position: absolute; 
+  top: -12px; 
+  width: 2px; 
