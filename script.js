@@ -43,10 +43,10 @@ function startGame() {
 
       gameOverSound.play();
 
-      // Definir a posição de "Game Over" onde o Mario bateu no pipe
+      // Posição de Game Over: colocar onde o Mario colidiu com o pipe
       const marioPosition = mario.getBoundingClientRect();
-      gameOverScreen.style.top = `${marioPosition.top}px`;
-      gameOverScreen.style.left = `${marioPosition.left}px`;
+      gameOverScreen.style.top = `${marioPosition.top}px`;  // Posição Y
+      gameOverScreen.style.left = `${marioPosition.left}px`; // Posição X
       gameOverScreen.classList.remove("hidden");
 
       clearInterval(gameLoop);
