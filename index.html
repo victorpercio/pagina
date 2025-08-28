@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
-    <script src="./js/script.js" defer></script>
-    <title>Mario Game</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mario Game</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/script.js" defer></script>
 </head>
 <body>
-   <div class="game-board day" id="gameBoard">
-        <img src="./img/mario.gif" class="mario">
-        <img src="./img/pipe.png" class="pipe">
-        <img src="./img/clouds.png" class="clouds">
+  <div class="game-board day" id="gameBoard">
+    <img src="./img/mario.gif" class="mario" alt="Mario">
+    <img src="./img/pipe.png" class="pipe" alt="Cano">
+    <img src="./img/clouds.png" class="clouds" alt="Nuvens">
 
-        <audio id="jump-sound" src="./audio/jump-up-245782.mp3"></audio>
-        <audio id="gameover-sound" src="./audio/8d82b5_SMW_Game_Over_Sound_Effect.mp3"></audio>
+    <audio id="jump-sound" src="./audio/jump-up-245782.mp3"></audio>
+    <audio id="gameover-sound" src="./audio/8d82b5_SMW_Game_Over_Sound_Effect.mp3"></audio>
 
-        <div class="score-board">
-            <h2>Fase: <span id="fase">1</span></h2>
-            <h2>Pontos: <span id="pontos">0</span></h2>
-        </div>
-   </div>
+    <div class="score-board">
+      <h2>Fase: <span id="fase">1</span></h2>
+      <h2>Pontos: <span id="pontos">0</span></h2>
+    </div>
+  </div>
 </body>
 </html>
