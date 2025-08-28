@@ -48,9 +48,9 @@ function startGame() {
       gameOverScreen.style.top = `${marioPosition.top + marioPosition.height / 2}px`; // Posição Y ajustada para o centro do Mario
       gameOverScreen.style.left = `${marioPosition.left + marioPosition.width / 4}px`; // Posição X ajustada para o centro do Mario
 
-      // Ajustar o tamanho da imagem de Game Over proporcional ao Mario
-      gameOverScreen.style.width = `${marioPosition.width * 1.5}px`;
-      gameOverScreen.style.height = `${marioPosition.height * 1.5}px`;
+      // Ajustar o tamanho da imagem de Game Over para um valor menor
+      gameOverScreen.style.width = `${marioPosition.width * 0.8}px`; // 80% do tamanho do Mario
+      gameOverScreen.style.height = `${marioPosition.height * 0.8}px`; // 80% da altura do Mario
 
       gameOverScreen.classList.remove("hidden");
 
