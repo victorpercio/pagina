@@ -85,4 +85,20 @@ function changeWeather(lv) {
 // Criar chuva
 function startRain() {
   for (let i = 0; i < 20; i++) {
-    const drop = document.create
+    const drop = document.createElement("div");
+    drop.classList.add("rain-drop");
+    drop.style.left = Math.random() * window.innerWidth + "px";
+    drop.style.animationDuration = 0.5 + Math.random() * 0.5 + "s";
+    gameBoard.appendChild(drop);
+
+    setTimeout(() => drop.remove(), 1000);
+  }
+  if (!isGameOver) setTimeout(startRain, 500);
+}
+
+// Eventos
+document.addEventListener("keydown", jump);
+document.addEventListener("click", jump);
+
+// Iniciar jogo
+startGame();
