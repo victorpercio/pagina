@@ -45,8 +45,13 @@ function startGame() {
 
       // Posição de Game Over: colocar onde o Mario colidiu com o pipe
       const marioPosition = mario.getBoundingClientRect();
-      gameOverScreen.style.top = `${marioPosition.top}px`;  // Posição Y
-      gameOverScreen.style.left = `${marioPosition.left}px`; // Posição X
+      gameOverScreen.style.top = `${marioPosition.top + marioPosition.height / 2}px`; // Posição Y ajustada para o centro do Mario
+      gameOverScreen.style.left = `${marioPosition.left + marioPosition.width / 4}px`; // Posição X ajustada para o centro do Mario
+
+      // Ajustar o tamanho da imagem de Game Over proporcional ao Mario
+      gameOverScreen.style.width = `${marioPosition.width * 1.5}px`;
+      gameOverScreen.style.height = `${marioPosition.height * 1.5}px`;
+
       gameOverScreen.classList.remove("hidden");
 
       clearInterval(gameLoop);
@@ -80,20 +85,4 @@ function changeWeather(lv) {
 // Criar chuva
 function startRain() {
   for (let i = 0; i < 20; i++) {
-    const drop = document.createElement("div");
-    drop.classList.add("rain-drop");
-    drop.style.left = Math.random() * window.innerWidth + "px";
-    drop.style.animationDuration = 0.5 + Math.random() * 0.5 + "s";
-    gameBoard.appendChild(drop);
-
-    setTimeout(() => drop.remove(), 1000);
-  }
-  if (!isGameOver) setTimeout(startRain, 500);
-}
-
-// Eventos
-document.addEventListener("keydown", jump);
-document.addEventListener("click", jump);
-
-// Iniciar jogo
-startGame();
+    const drop = document.create
